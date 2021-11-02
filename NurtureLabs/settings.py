@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+import os
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -23,11 +23,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'h07k!i5kjzl%-rdf=jtfh%55*rhhxmgbu4po(@4)xklw6$6o53'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['backend-test-nurturelabs.herokuapp.com','127.0.0.1']
 
+
 AUTH_USER_MODEL = "USERS.Users"
+
+
+LOGGING = {
+    'version':1,
+    'disabe_existing_loggers': False,
+    'handlers':{
+        'console':{
+            'class': 'logging.Streamhandler',
+        },
+    },
+    'loggers':{
+        'django':{
+            'handlers': ['console'],
+            'level':os.getenv('DJANGO_LOG_LEVEL','DEBUG'),
+        },
+    },
+}
 
 # Application definition
 
@@ -103,12 +121,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': "rest_framework.pagination.PageNumberPagination",
-    'PAGE_SIZE': 12
-
-}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
